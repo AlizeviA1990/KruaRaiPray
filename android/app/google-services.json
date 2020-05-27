@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "536294791068",
+    "firebase_url": "https://kruakhunpray-742fe.firebaseio.com",
+    "project_id": "kruakhunpray-742fe",
+    "storage_bucket": "kruakhunpray-742fe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536294791068:android:cc8943c3c1ae62686f9a59",
+        "android_client_info": {
+          "package_name": "com.iceo.kruaraipray"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "536294791068-ebm20ppdd49g6vl7sqqoenfjlve3ph40.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbUbnj7-2TxiB4vRgJ0Tzppjkg13lrgQo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "536294791068-ebm20ppdd49g6vl7sqqoenfjlve3ph40.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

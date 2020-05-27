@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>536294791068-r78qnagl4gbdkcdm5pvivp0k8v60rkii.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.536294791068-r78qnagl4gbdkcdm5pvivp0k8v60rkii</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDcw9RsSu7KhJVwrOJ4pZAyBR2yD3-lLlg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>536294791068</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.iceo.kruaraipray</string>
+	<key>PROJECT_ID</key>
+	<string>kruakhunpray-742fe</string>
+	<key>STORAGE_BUCKET</key>
+	<string>kruakhunpray-742fe.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:536294791068:ios:cf847d02dc5064cc6f9a59</string>
+	<key>DATABASE_URL</key>
+	<string>https://kruakhunpray-742fe.firebaseio.com</string>
+</dict>
+</plist>
