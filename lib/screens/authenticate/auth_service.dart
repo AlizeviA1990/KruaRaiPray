@@ -1,18 +1,69 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:kruaraipray/screens/models/user.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool isLogged = false;
+
+  ///--------------------------------------------------------------------------
 
   User _userFromFirebaseUser(FirebaseUser user) {
     return user != null ? User(uid: user.uid) : null;
   }
 
+  // auth change user stream
+  Stream<User> get user {
+    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+  }
+
+  ///----------------------------------------------------------------------------
+
+  Future<User> loginWithFB() async {
+    final fb_login_var = FacebookLogin();
+    final result = await fb_login_var.logIn(['email']);
+
+    try {
+      switch (result.status) {
+        case FacebookLoginStatus.loggedIn:
+          AuthResult result_1 = await _auth.signInWithCredential(
+              FacebookAuthProvider.getCredential(
+                  accessToken: result.accessToken.token));
+          FirebaseUser user = result_1.user;
+          return _userFromFirebaseUser(user);
+          break;
+        case FacebookLoginStatus.cancelledByUser:
+          break;
+        case FacebookLoginStatus.error:
+          break;
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  // Future<FirebaseUser> logOutWithFacebook() async {
+  //   await _auth_facebookSignIn.logOut();
+  //   print('Logged out.>>>>>>>>>>>>>');
+  // }
   Future signInAnon() async {
     try {
       AuthResult result = await _auth.signInAnonymously();
       FirebaseUser user = result.user;
       return _userFromFirebaseUser(user);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Future signOutAnon() async {
+    try {
+      return await _auth.signOut();
     } catch (e) {
       print(e.toString());
       return null;
