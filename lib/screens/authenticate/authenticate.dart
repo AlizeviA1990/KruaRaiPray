@@ -13,6 +13,7 @@ class AuthenticatePage extends StatefulWidget {
 }
 
 class _AuthenticatePageState extends State<AuthenticatePage> {
+  // global state
   bool loadingState = false;
   final AuthService _auth = AuthService();
 
