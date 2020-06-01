@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:kruaraipray/screens/models/user.dart';
+import 'package:kruaraipray/screens/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
@@ -32,7 +34,13 @@ class AuthService {
           AuthResult result_1 = await _auth.signInWithCredential(
               FacebookAuthProvider.getCredential(
                   accessToken: result.accessToken.token));
+
           FirebaseUser user = result_1.user;
+
+          // create a new document for the user with the uid
+          await DatabaseService(uid: user.uid)
+              .updateUserData(user.displayName, 0, user.photoUrl);
+
           return _userFromFirebaseUser(user);
           break;
         case FacebookLoginStatus.cancelledByUser:

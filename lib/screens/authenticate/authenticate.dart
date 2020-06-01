@@ -5,6 +5,7 @@ import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'dart:async';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:kruaraipray/screens/authenticate/auth_service.dart';
+import 'package:kruaraipray/screens/shared/loading.dart';
 
 class AuthenticatePage extends StatefulWidget {
   @override
@@ -15,64 +16,86 @@ class _AuthenticatePageState extends State<AuthenticatePage> {
   @override
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
+    bool loadingState = false;
 
-    return MaterialApp(
-      home: Scaffold(
-        body: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("images/splash_screen.jpg"),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                ClipOval(
-                  child: Container(
-                    width: 150.0,
-                    height: 150.0,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("images/facebook_login_btn.png"),
-                      ),
-                    ),
-                    child: FlatButton(
-                      padding: EdgeInsets.all(0.0),
-                      onPressed: () async {
-                        dynamic result = await _auth.loginWithFB();
-                        if (result == null) {
-                          print('null result from facebook.');
-                        } else {
-                          print('>\n>\n>\n');
-                          print('signed in');
-                          print(result.uid);
-                        }
-                      },
-                      child: null,
-                    ),
+    return loadingState
+        ? Loading()
+        : MaterialApp(
+            home: Scaffold(
+              body: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("images/splash_screen.jpg"),
+                    fit: BoxFit.cover,
                   ),
                 ),
-                RaisedButton(
-                  child: Text('Skip log-in'),
-                  onPressed: () async {
-                    dynamic result = await _auth.signInAnon();
-                    if (result == null) {
-                      print('error signing in');
-                    } else {
-                      print('>\n>\n>\n');
-                      print('signed in');
-                      print(result.uid);
-                    }
-                  },
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      ClipOval(
+                        child: Container(
+                          width: 150.0,
+                          height: 150.0,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image:
+                                  AssetImage("images/facebook_login_btn.png"),
+                            ),
+                          ),
+                          child: FlatButton(
+                            padding: EdgeInsets.all(0.0),
+                            onPressed: () async {
+                              setState(() {
+                                loadingState = true;
+                              });
+                              dynamic result = await _auth.loginWithFB();
+                              if (result == null) {
+                                setState(() {
+                                  loadingState = false;
+                                });
+
+                                print('null result from facebook.');
+                              } else {
+                                setState(() {
+                                  loadingState = false;
+                                });
+
+                                print('>\n>\n>\n');
+                                print('signed in');
+                                print(result.uid);
+                              }
+                            },
+                            child: null,
+                          ),
+                        ),
+                      ),
+                      RaisedButton(
+                        child: Text('Skip log-in'),
+                        onPressed: () {
+                          setState(() {
+                            loadingState = true;
+                            print(
+                                '------------------------------> loadingState: $loadingState');
+                          });
+                        },
+                        // onPressed: () async {
+                        //   dynamic result = await _auth.signInAnon();
+                        //   if (result == null) {
+                        //     print('error signing in');
+                        //   } else {
+                        //     print('>\n>\n>\n');
+                        //     print('signed in');
+                        //     print(result.uid);
+                        //   }
+                        // },
+                      ),
+                    ],
+                  ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
 
     throw UnimplementedError();
   }
