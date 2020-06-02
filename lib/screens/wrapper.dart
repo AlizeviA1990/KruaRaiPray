@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kruaraipray/screens/authenticate/authenticate.dart';
 import 'package:kruaraipray/screens/home/home.dart';
+import 'package:kruaraipray/screens/models/menu.dart';
 import 'package:kruaraipray/screens/models/user.dart';
 import 'package:provider/provider.dart';
 
@@ -9,6 +10,7 @@ class WrapperPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // return either Home or Authenticate widget
     final user = Provider.of<User>(context);
+    final menu = Provider.of<Menu>(context);
 
     if (user == null) {
       return AuthenticatePage();
