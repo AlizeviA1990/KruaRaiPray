@@ -17,11 +17,6 @@ class _AuthenticatePageState extends State<AuthenticatePage> {
   dynamic result;
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
 

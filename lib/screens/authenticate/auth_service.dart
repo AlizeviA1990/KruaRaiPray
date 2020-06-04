@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:kruaraipray/screens/models/user.dart';
-import 'package:kruaraipray/screens/models/menu.dart';
 import 'package:kruaraipray/screens/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -26,24 +25,10 @@ class AuthService {
   }
 
   ///----------------------------------------------------------------------------
-  ///--------------------------------------------------------------------------
-
-  Menu _menuFromFirebase() {
-    return menu != null ? Menu() : null;
-  }
-
-  // auth change menu stream
-  Stream<Menu> get menu {
-    return _auth.onAuthStateChanged
-        .map(_menu FromFirebase);
-  }
-
-  ///----------------------------------------------------------------------------
 
   Future<User> loginWithFB() async {
     final fbLoginVar = FacebookLogin();
     final result = await fbLoginVar.logIn(['email']);
-
     try {
       switch (result.status) {
         case FacebookLoginStatus.loggedIn:
