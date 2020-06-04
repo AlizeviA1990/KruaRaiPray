@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:kruaraipray/screens/models/user.dart';
 import 'package:kruaraipray/screens/services/database.dart';
+import 'package:kruaraipray/staticVar.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
@@ -14,7 +15,12 @@ class AuthService {
   ///--------------------------------------------------------------------------
 
   User _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? User(uid: user.uid) : null;
+    if (user != null) {
+      User(uid: user.uid);
+      return User(uid: user.uid);
+    } else {
+      return null;
+    }
   }
 
   // auth change user stream
@@ -39,9 +45,11 @@ class AuthService {
           FirebaseUser user = result_1.user;
 
           // create a new document for the user with the uid
-          await DatabaseService(uid: user.uid)
-              .updateUserData(user.displayName, 0, user.photoUrl);
-
+          await DatabaseService(uid: user.uid).updateUserData(
+            user.displayName,
+            0,
+            user.photoUrl,
+          );
           return _userFromFirebaseUser(user);
           break;
         case FacebookLoginStatus.cancelledByUser:
@@ -77,5 +85,9 @@ class AuthService {
       print(e.toString());
       return null;
     }
+  }
+
+  void getDocumentData() async {
+    return DatabaseService(uid: staticVar.localUser.uid).getData();
   }
 }

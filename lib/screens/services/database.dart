@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kruaraipray/screens/models/pray.dart';
 import 'package:kruaraipray/screens/models/user.dart';
+import 'package:kruaraipray/staticVar.dart';
 
 class DatabaseService {
   final String uid;
@@ -16,6 +17,21 @@ class DatabaseService {
         {'name': name, 'coin': coin, 'avatarURL': avatarURL, 'uid': uid});
   }
 
+  void getData() {
+    prayCollection.getDocuments().then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) {
+        if (f.data['uid']() == uid) {
+          staticVar.localUser = User(
+              uid: f.data['uid'],
+              avatarURL: f.data['avatarURL'],
+              displayName: f.data['name'],
+              coin: f.data['coin']);
+        }
+        print('.................> ${f.data}}');
+      });
+    });
+  }
+
   // pray list from snapshot
   List<Pray> _prayListFromSnapshot(QuerySnapshot snapshot) {
     List<Pray> a = snapshot.documents.map((doc) {
@@ -25,17 +41,23 @@ class DatabaseService {
           coin: doc.data['coin'] ?? 0,
           avatarURL: doc.data['avatarURL'] ?? '');
     }).toList();
-    List<Pray> ansPray = List<Pray>();
+
     for (int i = 0; i < a.length; i++) {
       if (a[i].uid == uid) {
-        ansPray.add(a[i]);
+        staticVar.localUser = User(
+          uid: a[i].uid,
+          displayName: a[i].displayName,
+          coin: a[i].coin,
+          avatarURL: a[i].avatarURL,
+        );
       }
     }
-    return ansPray;
+    return a;
   }
 
   // get userData stream
   Stream<List<Pray>> get localUserData {
+    getData();
     return prayCollection.snapshots().map(_prayListFromSnapshot);
   }
 }
